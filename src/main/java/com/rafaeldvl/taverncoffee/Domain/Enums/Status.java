@@ -2,7 +2,7 @@ package com.rafaeldvl.taverncoffee.Domain.Enums;
 
 public enum Status {
     ABERTO(0, "ABERTO"),
-    ANDAMENTO(1, "ANDAMENTO"),
+    ANDAMENTO(1, "PRODUZINDO"),
     FECHADO(2, "FECHADO");
 
     private Integer cod;
