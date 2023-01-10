@@ -17,7 +17,7 @@ public class OrdemPedido implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dataAbertura = LocalDateTime.now();
     private LocalDateTime dataFechamento;
     private String entrega;
@@ -95,8 +95,8 @@ public class OrdemPedido implements Serializable {
         return listaProduto;
     }
 
-    public void setListaProduto(List<Produto> listaProduto) {
-        this.listaProduto = listaProduto;
+    public void addListaProduto(Produto Produto) {
+        this.listaProduto.add(Produto);
     }
 
     public Cliente getCliente() {

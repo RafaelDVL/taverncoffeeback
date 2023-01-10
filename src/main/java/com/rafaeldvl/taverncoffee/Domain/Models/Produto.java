@@ -11,7 +11,7 @@ public class Produto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Short estoque;
+    private Integer estoque;
     private String nome;
     private String urlImage;
     private String observacoes;
@@ -22,7 +22,7 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Integer id, Short estoque, String nome, String urlImage, String observacoes) {
+    public Produto(Integer id, Integer estoque, String nome, String urlImage, String observacoes) {
         this.id = id;
         this.estoque = estoque;
         this.nome = nome;
@@ -38,11 +38,11 @@ public class Produto implements Serializable {
         this.id = id;
     }
 
-    public Short getEstoque() {
+    public Integer getEstoque() {
         return estoque;
     }
 
-    public void setEstoque(Short estoque) {
+    public void setEstoque(Integer estoque) {
         this.estoque = estoque;
     }
 

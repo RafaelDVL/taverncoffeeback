@@ -19,6 +19,10 @@ public class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
+
+    private String nome;
+
     @Column(unique = true)
     private String cpf;
 
@@ -39,8 +43,9 @@ public class Pessoa implements Serializable {
         addPerfil(Perfil.CLIENTE);
     }
 
-    public Pessoa(Integer id, String cpf, String email, String senha, String telefone, String endereco) {
+    public Pessoa(Integer id, String nome, String cpf, String email, String senha, String telefone, String endereco) {
         this.id = id;
+        this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.senha = senha;
@@ -55,6 +60,14 @@ public class Pessoa implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getCpf() {
@@ -118,11 +131,11 @@ public class Pessoa implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pessoa pessoa = (Pessoa) o;
-        return Objects.equals(id, pessoa.id) && Objects.equals(cpf, pessoa.cpf) && Objects.equals(email, pessoa.email) && Objects.equals(senha, pessoa.senha) && Objects.equals(telefone, pessoa.telefone) && Objects.equals(endereco, pessoa.endereco) && Objects.equals(perfil, pessoa.perfil) && Objects.equals(datacriacao, pessoa.datacriacao);
+        return Objects.equals(id, pessoa.id) && Objects.equals(nome, pessoa.nome) && Objects.equals(cpf, pessoa.cpf) && Objects.equals(email, pessoa.email) && Objects.equals(senha, pessoa.senha) && Objects.equals(telefone, pessoa.telefone) && Objects.equals(endereco, pessoa.endereco) && Objects.equals(perfil, pessoa.perfil) && Objects.equals(datacriacao, pessoa.datacriacao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cpf, email, senha, telefone, endereco, perfil, datacriacao);
+        return Objects.hash(id, nome, cpf, email, senha, telefone, endereco, perfil, datacriacao);
     }
 }

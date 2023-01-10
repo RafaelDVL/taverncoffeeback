@@ -16,8 +16,8 @@ public class Cliente extends Pessoa{
     public Cliente() {
     }
 
-    public Cliente(Integer id, String cpf, String email, String senha, String telefone, String endereco) {
-        super(id, cpf, email, senha, telefone, endereco);
+    public Cliente(Integer id, String nome, String cpf, String email, String senha, String telefone, String endereco) {
+        super(id, nome, cpf, email, senha, telefone, endereco);
     }
 
     public List<OrdemPedido> getListaOrdem() {

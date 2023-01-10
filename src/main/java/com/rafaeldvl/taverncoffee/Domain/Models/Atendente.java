@@ -15,8 +15,8 @@ public class Atendente extends Pessoa {
     public Atendente() {
     }
 
-    public Atendente(Integer id, String cpf, String email, String senha, String telefone, String endereco) {
-        super(id, cpf, email, senha, telefone, endereco);
+    public Atendente(Integer id, String nome, String cpf, String email, String senha, String telefone, String endereco) {
+        super(id, nome, cpf, email, senha, telefone, endereco);
     }
 
     public List<OrdemPedido> getListaOrdem() {
