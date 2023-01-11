@@ -1,5 +1,7 @@
 package com.rafaeldvl.taverncoffee.Domain.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class Produto implements Serializable {
     private String urlImage;
     private String observacoes;
 
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "listaProduto")
     private List<OrdemPedido> listaOrdem = new ArrayList<>();
 
@@ -68,5 +72,13 @@ public class Produto implements Serializable {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
+    }
+
+    public List<OrdemPedido> getListaOrdem() {
+        return listaOrdem;
+    }
+
+    public void addListaOrdem(OrdemPedido ordemPedido) {
+        this.listaOrdem.add(ordemPedido);
     }
 }

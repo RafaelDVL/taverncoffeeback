@@ -30,7 +30,13 @@ public class DBService {
                 "rafaelrodrigues@gmail.com",
                 "minhasenha","1590908765",
                 "Avenida Champs, 610");
-        at1.addPerfil(Perfil.ADMIN);
+        at1.addPerfil(Perfil.ATENDENTE);
+        Atendente at2 = new Atendente(null, "Marcelo Dias Rodrigues",
+                "904.952.710-80",
+                "marcelorodrigues@gmail.com",
+                "minhasenha","1590908666",
+                "Avenida Champs, 260");
+        at2.addPerfil(Perfil.ATENDENTE);
 
         Cliente c1 = new Cliente(null,"Maria Aparecida",
                 "830.910.910-58",
@@ -41,13 +47,13 @@ public class DBService {
 
         Produto p1 = new Produto(null,10,"Pizza","http://conteudo.imguol.com.br/c/entretenimento/54/2021/05/07/pizza-de-batata---instachef-1620392226580_v2_1598x1920.jpg","Sem tomate");
 
-        OrdemPedido o1 = new OrdemPedido(null,"Retirar", Status.ABERTO, c1, at1, Prioridade.MEDIA);
+        OrdemPedido o1 = new OrdemPedido(null,"Retirar", Status.ABERTO, c1, at2, Prioridade.MEDIA);
 
+
+        produtoRepository.save(p1);
         clienteRepository.save(c1);
         atendenteRepository.save(at1);
-        produtoRepository.save(p1);
-
-        o1.addListaProduto(p1);
+        atendenteRepository.save(at2);
         ordemPedidoRepository.save(o1);
 
     }

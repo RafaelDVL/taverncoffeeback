@@ -1,6 +1,7 @@
 package com.rafaeldvl.taverncoffee.Domain.Models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Prioridade;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Status;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class OrdemPedido implements Serializable {
@@ -16,15 +18,15 @@ public class OrdemPedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dataAbertura = LocalDateTime.now();
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dataFechamento;
     private String entrega;
-
     private Prioridade prioridade;
     private Status status;
 
+    @JsonIgnore
     @ElementCollection
     @JoinTable(name = "ordempedido_produtos", joinColumns = {@JoinColumn(name ="ordempedido_id")}, inverseJoinColumns = {@JoinColumn(name = "produto_id")})
     private List<Produto> listaProduto = new ArrayList<>();
@@ -121,5 +123,17 @@ public class OrdemPedido implements Serializable {
 
     public void setPrioridade(Prioridade prioridade) {
         this.prioridade = prioridade;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrdemPedido that = (OrdemPedido) o;
+        return Objects.equals(id, that.id) && Objects.equals(dataAbertura, that.dataAbertura) && Objects.equals(dataFechamento, that.dataFechamento) && Objects.equals(entrega, that.entrega) && prioridade == that.prioridade && status == that.status && Objects.equals(listaProduto, that.listaProduto) && Objects.equals(cliente, that.cliente) && Objects.equals(atendente, that.atendente);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, dataAbertura, dataFechamento, entrega, prioridade, status, listaProduto, cliente, atendente);
     }
 }
