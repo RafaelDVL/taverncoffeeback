@@ -9,4 +9,7 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Integer> {
 
     @Override
     Optional<Pessoa> findById(Integer integer);
+
+    Optional<Pessoa> findByCpf(String cpf);
+    Optional<Pessoa> findByEmail(String email);
 }

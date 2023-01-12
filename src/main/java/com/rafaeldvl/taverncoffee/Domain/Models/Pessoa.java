@@ -34,7 +34,7 @@ public class Pessoa implements Serializable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "PERFIS")
-    private Set<Integer> perfil = new HashSet<>();
+    Set<Integer> perfil = new HashSet<>();
 
     @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime datacriacao = LocalDateTime.now();

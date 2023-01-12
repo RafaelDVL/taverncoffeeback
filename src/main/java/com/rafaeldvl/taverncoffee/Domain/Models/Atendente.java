@@ -1,12 +1,14 @@
 package com.rafaeldvl.taverncoffee.Domain.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rafaeldvl.taverncoffee.Domain.DTOS.AtendenteDTO;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Perfil;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Atendente extends Pessoa {
@@ -22,11 +24,26 @@ public class Atendente extends Pessoa {
         super(id, nome, cpf, email, senha, telefone, endereco);
         addPerfil(Perfil.ATENDENTE);
     }
+
+    public Atendente(AtendenteDTO obj) {
+        super();
+        this.setId(obj.getId());
+        this.setNome(obj.getNome());
+        this.setCpf(obj.getCpf());
+        this.setEmail(obj.getEmail());
+        this.setSenha(obj.getSenha());
+        this.setTelefone(obj.getTelefone());
+        this.setEndereco(obj.getEndereco());
+        this.perfil = obj.getPerfil().stream().map(Perfil::getCod).collect(Collectors.toSet());
+        this.setDatacriacao(obj.getDatacriacao());
+    }
+
+
     public List<OrdemPedido> getListaOrdem() {
         return listaOrdem;
     }
 
-    public void addListaOrdem(OrdemPedido ordemPedido) {
-        this.listaOrdem.add(ordemPedido);
+    public void addListaOrdem(List<OrdemPedido> ordemPedidos) {
+        this.listaOrdem = ordemPedidos;
     }
 }
