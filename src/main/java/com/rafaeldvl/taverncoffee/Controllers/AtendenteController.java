@@ -36,8 +36,8 @@ public class AtendenteController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<AtendenteDTO> createAtendente(@Valid @RequestBody AtendenteDTO obj){
-        Atendente newObj = service.create(obj);
+    public ResponseEntity<AtendenteDTO> createAtendente(@RequestBody @Valid AtendenteDTO objDTO){
+        Atendente newObj = service.create(objDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }

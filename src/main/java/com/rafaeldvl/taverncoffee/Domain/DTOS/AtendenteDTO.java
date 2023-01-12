@@ -3,7 +3,9 @@ package com.rafaeldvl.taverncoffee.Domain.DTOS;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Perfil;
 import com.rafaeldvl.taverncoffee.Domain.Models.Atendente;
+import org.hibernate.validator.constraints.br.CPF;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -13,14 +15,18 @@ import java.util.stream.Collectors;
 public class AtendenteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
         private Integer id;
+        @NotNull(message = "O campo NOME é obrigatorio!")
         private String nome;
+        @CPF
+        @NotNull(message = "O campo CPF é obrigatorio!")
         private String cpf;
+        @NotNull(message = "O campo EMAIL é obrigatorio!")
         private String email;
-
-
-
-    private String senha;
+        @NotNull(message = "O campo SENHA é obrigatorio!")
+        private String senha;
+        @NotNull(message = "O campo TELEFONE é obrigatorio!")
         private String telefone;
+        @NotNull(message = "Endereço requerido!")
         private String endereco;
         private Set<Integer> perfil = new HashSet<>();
         @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")

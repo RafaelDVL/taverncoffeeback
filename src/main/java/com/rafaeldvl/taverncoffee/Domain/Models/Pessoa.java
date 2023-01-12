@@ -18,14 +18,10 @@ public class Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-
-
+    @Column(nullable = false)
     private String nome;
-
     @Column(unique = true)
     private String cpf;
-
     @Column(unique = true)
     private String email;
     private String senha;
