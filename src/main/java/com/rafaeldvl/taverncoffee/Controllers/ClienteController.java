@@ -1,8 +1,8 @@
 package com.rafaeldvl.taverncoffee.Controllers;
 
-import com.rafaeldvl.taverncoffee.Domain.DTOS.AtendenteDTO;
-import com.rafaeldvl.taverncoffee.Domain.Models.Atendente;
-import com.rafaeldvl.taverncoffee.Services.AtendenteService;
+import com.rafaeldvl.taverncoffee.Domain.DTOS.ClienteDTO;
+import com.rafaeldvl.taverncoffee.Domain.Models.Cliente;
+import com.rafaeldvl.taverncoffee.Services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,36 +14,36 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/atendentes")
-public class AtendenteController {
+@RequestMapping("/clientes")
+public class ClienteController {
 
     @Autowired
-    AtendenteService service;
+    ClienteService service;
 
     @GetMapping("/all")
-    public ResponseEntity<List<AtendenteDTO>> findAll(){
-        List<Atendente> obj = service.findAll();
-        List<AtendenteDTO> objDTO = obj.stream().map(AtendenteDTO::new).toList();
+    public ResponseEntity<List<ClienteDTO>> findAll(){
+        List<Cliente> obj = service.findAll();
+        List<ClienteDTO> objDTO = obj.stream().map(ClienteDTO::new).toList();
         return ResponseEntity.ok().body(objDTO);
     }
     @GetMapping("/findid/{id}")
-    public ResponseEntity<AtendenteDTO> findById(@PathVariable Integer id){
-        Atendente obj = service.findById(id);
-        AtendenteDTO objDto = new AtendenteDTO(obj);
+    public ResponseEntity<ClienteDTO> findById(@PathVariable Integer id){
+        Cliente obj = service.findById(id);
+        ClienteDTO objDto = new ClienteDTO(obj);
         return ResponseEntity.ok().body(objDto);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<AtendenteDTO> create(@RequestBody @Valid AtendenteDTO objDTO){
-        Atendente newObj = service.create(objDTO);
+    public ResponseEntity<ClienteDTO> create(@RequestBody @Valid ClienteDTO objDTO){
+        Cliente newObj = service.create(objDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AtendenteDTO> update(@RequestBody @Valid AtendenteDTO objDTO,@PathVariable Integer id){
-        Atendente obj = service.update(objDTO,id);
-        return ResponseEntity.ok().body(new AtendenteDTO(obj));
+    public ResponseEntity<ClienteDTO> update(@RequestBody @Valid ClienteDTO objDTO,@PathVariable Integer id){
+        Cliente obj = service.update(objDTO,id);
+        return ResponseEntity.ok().body(new ClienteDTO(obj));
     }
 
     @DeleteMapping("/delete/{id}")

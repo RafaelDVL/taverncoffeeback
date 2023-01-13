@@ -1,9 +1,9 @@
 package com.rafaeldvl.taverncoffee.Services;
 
-import com.rafaeldvl.taverncoffee.Domain.DTOS.AtendenteDTO;
-import com.rafaeldvl.taverncoffee.Domain.Models.Atendente;
+import com.rafaeldvl.taverncoffee.Domain.DTOS.ClienteDTO;
+import com.rafaeldvl.taverncoffee.Domain.Models.Cliente;
 import com.rafaeldvl.taverncoffee.Domain.Models.Pessoa;
-import com.rafaeldvl.taverncoffee.Repository.AtendenteRepository;
+import com.rafaeldvl.taverncoffee.Repository.ClienteRepository;
 import com.rafaeldvl.taverncoffee.Repository.PessoaRepository;
 import com.rafaeldvl.taverncoffee.Services.Exceptions.DataIntegrityViolationException;
 import com.rafaeldvl.taverncoffee.Services.Exceptions.ObjectNotFoundException;
@@ -14,33 +14,32 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
 @Service
-public class AtendenteService {
+public class ClienteService {
 
     @Autowired
-    AtendenteRepository repository;
+    ClienteRepository repository;
 
     @Autowired
     PessoaRepository pessoaRepository;
 
-    public List<Atendente> findAll(){
+    public List<Cliente> findAll(){
         return  repository.findAll();
     }
 
-    public Atendente findById(Integer id) {
-        Optional<Atendente> response = repository.findById(id);
+    public Cliente findById(Integer id) {
+        Optional<Cliente> response = repository.findById(id);
         return response.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!" + id));
     }
 
-    public Atendente create(AtendenteDTO objDTO) {
+    public Cliente create(ClienteDTO objDTO) {
         objDTO.setId(null);
         validCpfEmail(objDTO);
-        Atendente newObj = new Atendente(objDTO);
+        Cliente newObj = new Cliente(objDTO);
         return repository.save(newObj);
     }
 
-    private void validCpfEmail(AtendenteDTO objDTO) {
+    private void validCpfEmail(ClienteDTO objDTO) {
         Optional<Pessoa> oldObjCpf = pessoaRepository.findByCpf(objDTO.getCpf());
         if(oldObjCpf.isPresent() && !Objects.equals(oldObjCpf.get().getId(), objDTO.getId())){
             throw new DataIntegrityViolationException("Cpf ja cadastrado no sistema!");
@@ -51,22 +50,23 @@ public class AtendenteService {
         }
     }
 
-    public Atendente update(@Valid AtendenteDTO objDTO, Integer id) {
+    public Cliente update(@Valid ClienteDTO objDTO, Integer id) {
         objDTO.setId(id);
-        Atendente oldObj = findById(id);
+        Cliente oldObj = findById(id);
         validCpfEmail(objDTO);
-        Atendente newObj = new Atendente(objDTO);
+        Cliente newObj = new Cliente(objDTO);
         newObj.setDatacriacao(oldObj.getDatacriacao());
         return repository.save(newObj);
     }
 
     public void delele(Integer id) {
-        Atendente obj = findById(id);
+        Cliente obj = findById(id);
         if(obj.getListaOrdem().size() <= 0){
             repository.deleteById(id);
         } else {
-            throw new DataIntegrityViolationException("Esse atendente não pode ser apagado porque contem PEDIDOS em aberto!");
+            throw new DataIntegrityViolationException("Esse Cliente não pode ser apagado porque contem PEDIDOS em aberto!");
         }
 
     }
+
 }
