@@ -1,39 +1,35 @@
-package com.rafaeldvl.taverncoffee.Domain.Models;
+package com.rafaeldvl.taverncoffee.Domain.DTOS;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rafaeldvl.taverncoffee.Domain.Models.OrdemPedido;
+import com.rafaeldvl.taverncoffee.Domain.Models.Produto;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-public class Produto implements Serializable {
+public class ProdutoDTO implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
     private Integer estoque;
+
     private Double preco;
     private String nome;
     private String urlImage;
     private String observacoes;
 
+    private List<OrdemPedido> listaOrdem;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "listaProduto")
-    private List<OrdemPedido> listaOrdem = new ArrayList<>();
-
-    public Produto() {
+    public ProdutoDTO() {
     }
-
-    public Produto(Integer id, Integer estoque, Double preco, String nome, String urlImage, String observacoes) {
-        this.id = id;
-        this.estoque = estoque;
-        this.preco = preco;
-        this.nome = nome;
-        this.urlImage = urlImage;
-        this.observacoes = observacoes;
+    public ProdutoDTO(Produto obj) {
+        this.id = obj.getId();
+        this.estoque = obj.getEstoque();
+        this.preco = obj.getPreco();
+        this.nome = obj.getNome();
+        this.urlImage = obj.getUrlImage();
+        this.observacoes = obj.getObservacoes();
+        this.listaOrdem= obj.getListaOrdem();
     }
 
     public Integer getId() {
@@ -88,7 +84,7 @@ public class Produto implements Serializable {
         return listaOrdem;
     }
 
-    public void addListaOrdem(OrdemPedido ordemPedido) {
-        this.listaOrdem.add(ordemPedido);
+    public void setListaOrdem(List<OrdemPedido> listaOrdem) {
+        this.listaOrdem = listaOrdem;
     }
 }

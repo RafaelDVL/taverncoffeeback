@@ -52,7 +52,6 @@ public class OrdemPedido implements Serializable {
         this.atendente = atendente;
         this.prioridade = prioridade;
     }
-
     public Integer getId() {
         return id;
     }

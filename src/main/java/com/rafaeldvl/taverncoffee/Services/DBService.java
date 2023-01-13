@@ -45,7 +45,7 @@ public class DBService {
                 "Rua João Borsato");
         c1.addPerfil(Perfil.CLIENTE);
 
-        Produto p1 = new Produto(null,10,"Pizza","http://conteudo.imguol.com.br/c/entretenimento/54/2021/05/07/pizza-de-batata---instachef-1620392226580_v2_1598x1920.jpg","Sem tomate");
+        Produto p1 = new Produto(null,10,20.00,"Pizza","http://conteudo.imguol.com.br/c/entretenimento/54/2021/05/07/pizza-de-batata---instachef-1620392226580_v2_1598x1920.jpg","Sem tomate");
 
         OrdemPedido o1 = new OrdemPedido(null,"Retirar", Status.ABERTO, c1, at2, Prioridade.MEDIA);
 
