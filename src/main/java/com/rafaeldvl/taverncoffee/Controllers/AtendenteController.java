@@ -4,7 +4,6 @@ import com.rafaeldvl.taverncoffee.Domain.DTOS.AtendenteDTO;
 import com.rafaeldvl.taverncoffee.Domain.Models.Atendente;
 import com.rafaeldvl.taverncoffee.Services.AtendenteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -12,7 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -36,9 +34,15 @@ public class AtendenteController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<AtendenteDTO> createAtendente(@RequestBody @Valid AtendenteDTO objDTO){
+    public ResponseEntity<AtendenteDTO> create(@RequestBody @Valid AtendenteDTO objDTO){
         Atendente newObj = service.create(objDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<AtendenteDTO> update(@RequestBody @Valid AtendenteDTO objDTO,@PathVariable Integer id){
+        Atendente obj = service.update(objDTO,id);
+        return ResponseEntity.ok().body(new AtendenteDTO(obj));
     }
 }
