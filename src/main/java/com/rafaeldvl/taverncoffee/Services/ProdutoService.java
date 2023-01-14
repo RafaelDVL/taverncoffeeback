@@ -1,7 +1,6 @@
 package com.rafaeldvl.taverncoffee.Services;
 
 import com.rafaeldvl.taverncoffee.Domain.DTOS.ProdutoDTO;
-import com.rafaeldvl.taverncoffee.Domain.Models.OrdemPedido;
 import com.rafaeldvl.taverncoffee.Domain.Models.Produto;
 import com.rafaeldvl.taverncoffee.Repository.ProdutoRepository;
 import com.rafaeldvl.taverncoffee.Services.Exceptions.ObjectNotFoundException;

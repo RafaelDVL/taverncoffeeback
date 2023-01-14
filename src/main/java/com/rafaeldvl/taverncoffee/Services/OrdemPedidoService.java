@@ -48,7 +48,6 @@ public class OrdemPedidoService {
         OrdemPedido op = new OrdemPedido();
         if(opDTO.getId() != null){
             op.setId(opDTO.getId());
-
         }
         if(opDTO.getStatus().equals(2)){
             op.setDataFechamento(LocalDateTime.now());
@@ -61,5 +60,16 @@ public class OrdemPedidoService {
         op.setEntrega(opDTO.getEntrega());
 
         return op;
+    }
+
+    public OrdemPedido update(OrdemPedidoDTO objDTO, Integer id) {
+        objDTO.setId(id);
+        OrdemPedido response = findById(id);
+        response = novoChamado(objDTO);
+        return repository.save(response);
+    }
+
+    public void delete(Integer id) {
+        repository.deleteById(id);
     }
 }

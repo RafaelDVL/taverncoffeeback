@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/ordempedido")
 public class OrdemPedidoController {
-
     @Autowired
     OrdemPedidoService service;
 
@@ -38,5 +37,17 @@ public class OrdemPedidoController {
         OrdemPedido newObj = service.create(ordemPedidoDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<OrdemPedidoDTO> update(@Valid @RequestBody OrdemPedidoDTO objDTO, @PathVariable Integer id){
+        OrdemPedido obj = service.update(objDTO,id);
+        return ResponseEntity.ok().body(new OrdemPedidoDTO(obj));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
