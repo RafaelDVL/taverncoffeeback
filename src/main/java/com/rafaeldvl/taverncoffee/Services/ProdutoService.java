@@ -1,5 +1,6 @@
 package com.rafaeldvl.taverncoffee.Services;
 
+import com.rafaeldvl.taverncoffee.Domain.DTOS.ProdutoDTO;
 import com.rafaeldvl.taverncoffee.Domain.Models.Produto;
 import com.rafaeldvl.taverncoffee.Repository.ProdutoRepository;
 import com.rafaeldvl.taverncoffee.Services.Exceptions.ObjectNotFoundException;
@@ -11,8 +12,6 @@ import java.util.Optional;
 
 @Service
 public class ProdutoService {
-
-
     @Autowired
     ProdutoRepository repository;
 
@@ -23,5 +22,10 @@ public class ProdutoService {
     public Produto findById(Integer id) {
         Optional<Produto> obj =  repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!" + id));
+    }
+    public Produto create(ProdutoDTO objDTO) {
+        objDTO.setId(null);
+        Produto obj = new Produto(objDTO);
+        return repository.save(obj);
     }
 }

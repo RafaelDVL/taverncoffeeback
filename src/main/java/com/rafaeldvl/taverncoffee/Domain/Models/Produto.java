@@ -1,6 +1,7 @@
 package com.rafaeldvl.taverncoffee.Domain.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rafaeldvl.taverncoffee.Domain.DTOS.ProdutoDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,6 +35,15 @@ public class Produto implements Serializable {
         this.nome = nome;
         this.urlImage = urlImage;
         this.observacoes = observacoes;
+    }
+
+    public Produto(ProdutoDTO objDTO) {
+        this.id = objDTO.getId();
+        this.estoque = objDTO.getEstoque();
+        this.preco = objDTO.getPreco();
+        this.nome = objDTO.getNome();
+        this.urlImage = objDTO.getUrlImage();
+        this.observacoes = objDTO.getObservacoes();
     }
 
     public Integer getId() {

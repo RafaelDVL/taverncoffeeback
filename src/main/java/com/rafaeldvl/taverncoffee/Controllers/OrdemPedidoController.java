@@ -5,11 +5,11 @@ import com.rafaeldvl.taverncoffee.Domain.Models.OrdemPedido;
 import com.rafaeldvl.taverncoffee.Services.OrdemPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -31,5 +31,12 @@ public class OrdemPedidoController {
         OrdemPedido obj = service.findById(id);
         OrdemPedidoDTO objDTO = new OrdemPedidoDTO(obj);
         return ResponseEntity.ok().body(objDTO);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<OrdemPedidoDTO> create(@Valid @RequestBody OrdemPedidoDTO ordemPedidoDTO){
+        OrdemPedido newObj = service.create(ordemPedidoDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }

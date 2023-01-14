@@ -2,6 +2,7 @@ package com.rafaeldvl.taverncoffee.Domain.Models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rafaeldvl.taverncoffee.Domain.DTOS.OrdemPedidoDTO;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Prioridade;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Status;
 
@@ -52,6 +53,7 @@ public class OrdemPedido implements Serializable {
         this.atendente = atendente;
         this.prioridade = prioridade;
     }
+
     public Integer getId() {
         return id;
     }

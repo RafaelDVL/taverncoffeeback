@@ -9,6 +9,7 @@ import com.rafaeldvl.taverncoffee.Domain.Models.Cliente;
 import com.rafaeldvl.taverncoffee.Domain.Models.OrdemPedido;
 import com.rafaeldvl.taverncoffee.Domain.Models.Produto;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,15 +21,13 @@ public class OrdemPedidoDTO implements Serializable {
     private LocalDateTime dataAbertura;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dataFechamento;
+    @NotBlank
     private String entrega;
-    private Prioridade prioridade;
-    private Status status;
+    private Integer prioridade;
+    private Integer status;
     private List<Produto> listaProduto;
-
-    @JsonIgnore
-    private Cliente cliente;
-    @JsonIgnore
-    private Atendente atendente;
+    private Integer cliente;
+    private Integer atendente;
     private String nomeAtendente;
     private String nomeCliente;
 
@@ -41,11 +40,11 @@ public class OrdemPedidoDTO implements Serializable {
         this.dataAbertura = obj.getDataAbertura();
         this.dataFechamento = obj.getDataFechamento();
         this.entrega = obj.getEntrega();
-        this.prioridade = obj.getPrioridade();
-        this.status = obj.getStatus();
+        this.prioridade = obj.getPrioridade().getCod();
+        this.status = obj.getStatus().getCod();
         this.listaProduto = obj.getListaProduto();
-        this.cliente = obj.getCliente();
-        this.atendente = obj.getAtendente();
+        this.cliente = obj.getCliente().getId();
+        this.atendente = obj.getAtendente().getId();
         this.nomeAtendente = obj.getAtendente().getNome();
         this.nomeCliente = obj.getCliente().getNome();
     }
@@ -82,19 +81,19 @@ public class OrdemPedidoDTO implements Serializable {
         this.entrega = entrega;
     }
 
-    public Prioridade getPrioridade() {
+    public Integer getPrioridade() {
         return prioridade;
     }
 
-    public void setPrioridade(Prioridade prioridade) {
+    public void setPrioridade(Integer prioridade) {
         this.prioridade = prioridade;
     }
 
-    public Status getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -106,19 +105,19 @@ public class OrdemPedidoDTO implements Serializable {
         this.listaProduto = listaProduto;
     }
 
-    public Cliente getCliente() {
+    public Integer getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Integer cliente) {
         this.cliente = cliente;
     }
 
-    public Atendente getAtendente() {
+    public Integer getAtendente() {
         return atendente;
     }
 
-    public void setAtendente(Atendente atendente) {
+    public void setAtendente(Integer atendente) {
         this.atendente = atendente;
     }
 

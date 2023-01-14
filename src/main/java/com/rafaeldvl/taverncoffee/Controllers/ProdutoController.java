@@ -6,9 +6,10 @@ import com.rafaeldvl.taverncoffee.Services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -29,5 +30,12 @@ public class ProdutoController {
     public ResponseEntity<ProdutoDTO> findid(@PathVariable Integer id){
         Produto obj = service.findById(id);
         return ResponseEntity.ok().body(new ProdutoDTO(obj));
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<ProdutoDTO> create(@RequestBody ProdutoDTO objDTO){
+        Produto newObj = service.create(objDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
