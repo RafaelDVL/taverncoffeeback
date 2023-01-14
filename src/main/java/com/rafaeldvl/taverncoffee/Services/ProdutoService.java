@@ -1,6 +1,7 @@
 package com.rafaeldvl.taverncoffee.Services;
 
 import com.rafaeldvl.taverncoffee.Domain.DTOS.ProdutoDTO;
+import com.rafaeldvl.taverncoffee.Domain.Models.OrdemPedido;
 import com.rafaeldvl.taverncoffee.Domain.Models.Produto;
 import com.rafaeldvl.taverncoffee.Repository.ProdutoRepository;
 import com.rafaeldvl.taverncoffee.Services.Exceptions.ObjectNotFoundException;
@@ -27,5 +28,20 @@ public class ProdutoService {
         objDTO.setId(null);
         Produto obj = new Produto(objDTO);
         return repository.save(obj);
+    }
+    public void delete(Integer id) {
+        Produto obj = findById(id);
+        repository.deleteById(id);
+    }
+
+    public Produto update(ProdutoDTO objDTO, Integer id) {
+        objDTO.setId(id);
+        Produto oldobj = findById(id);
+        oldobj.setEstoque(objDTO.getEstoque());
+        oldobj.setNome(objDTO.getNome());
+        oldobj.setPreco(objDTO.getPreco());
+        oldobj.setUrlImage(objDTO.getUrlImage());
+        oldobj.setObservacoes(objDTO.getObservacoes());
+        return repository.save(oldobj);
     }
 }

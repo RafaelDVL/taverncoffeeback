@@ -46,19 +46,18 @@ public class OrdemPedidoService {
         Atendente atendente = atendenteService.findById(opDTO.getAtendente());
         Cliente cliente = clienteService.findById(opDTO.getCliente());
         OrdemPedido op = new OrdemPedido();
-
         if(opDTO.getId() != null){
             op.setId(opDTO.getId());
+
         }
         if(opDTO.getStatus().equals(2)){
             op.setDataFechamento(LocalDateTime.now());
+            op.setDataAbertura(opDTO.getDataAbertura());
         }
-
         op.setAtendente(atendente);
         op.setCliente(cliente);
         op.setPrioridade(Prioridade.toEnum(opDTO.getPrioridade()));
         op.setStatus(Status.toEnum(opDTO.getStatus()));
-        op.setDataAbertura(opDTO.getDataAbertura());
         op.setEntrega(opDTO.getEntrega());
 
         return op;

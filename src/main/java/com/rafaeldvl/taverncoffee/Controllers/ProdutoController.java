@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -38,4 +39,17 @@ public class ProdutoController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ProdutoDTO> update(@Valid @RequestBody ProdutoDTO objDTO, @PathVariable Integer id){
+        Produto obj =  service.update(objDTO,id);
+        return ResponseEntity.ok().body(new ProdutoDTO(obj));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
