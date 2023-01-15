@@ -8,6 +8,7 @@ import com.rafaeldvl.taverncoffee.Repository.PessoaRepository;
 import com.rafaeldvl.taverncoffee.Services.Exceptions.DataIntegrityViolationException;
 import com.rafaeldvl.taverncoffee.Services.Exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -23,6 +24,9 @@ public class ClienteService {
     @Autowired
     PessoaRepository pessoaRepository;
 
+    @Autowired
+    BCryptPasswordEncoder encoder;
+
     public List<Cliente> findAll(){
         return  repository.findAll();
     }
@@ -34,6 +38,7 @@ public class ClienteService {
 
     public Cliente create(ClienteDTO objDTO) {
         objDTO.setId(null);
+        objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         validCpfEmail(objDTO);
         Cliente newObj = new Cliente(objDTO);
         return repository.save(newObj);
