@@ -1,5 +1,6 @@
 package com.rafaeldvl.taverncoffee.Security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,12 +15,41 @@ public class JWTUtil {
     private Long expiration;
 
     @Value("${jwt.secret}")
-    private String secretkey;
+    private String secret;
     public String generateToken(String email){
         return Jwts.builder()
                 .setSubject(email)
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS512, secretkey.getBytes())
+                .signWith(SignatureAlgorithm.HS512, secret.getBytes())
                 .compact();
+    }
+
+    public boolean tokenValid(String key) {
+        Claims claims = getClaims(key);
+        if(claims != null){
+            String username = claims.getSubject();
+            Date expirationDate = claims.getExpiration();
+            Date now = new Date(System.currentTimeMillis());
+            if(username != null && expirationDate != null && now.before(expirationDate)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Claims getClaims(String key) {
+        try{
+            return Jwts.parser().setSigningKey(key.getBytes()).parseClaimsJws(key).getBody();
+        }catch (Exception exception){
+            return null;
+        }
+    }
+
+    public String getUsername(String key) {
+        Claims claims = getClaims(key);
+        if(claims != null){
+            return claims.getSubject();
+        }
+        return null;
     }
 }

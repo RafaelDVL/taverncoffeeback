@@ -22,6 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(user.isPresent()){
             return new UserSS(user.get().getId(),user.get().getEmail(),user.get().getSenha(),user.get().getPerfil());
         }
-        throw  new UsernameNotFoundException("Usuario não encontrado! -> "+ email);
+        throw  new UsernameNotFoundException(email);
     }
 }
