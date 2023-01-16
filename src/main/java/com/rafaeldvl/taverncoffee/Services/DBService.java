@@ -54,12 +54,10 @@ public class DBService {
 
         OrdemPedido o1 = new OrdemPedido(null,"Retirar", Status.ABERTO, c1, at2, Prioridade.MEDIA);
 
-
         produtoRepository.save(p1);
         clienteRepository.save(c1);
         atendenteRepository.save(at1);
         atendenteRepository.save(at2);
         ordemPedidoRepository.save(o1);
-
     }
 }
