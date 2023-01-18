@@ -3,7 +3,6 @@ package com.rafaeldvl.taverncoffee.Security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -11,11 +10,12 @@ import java.util.Date;
 @Component
 public class JWTUtil {
 
-    @Value("${jwt.expiration}")
-    private Long expiration;
 
-    @Value("${jwt.secret}")
-    private String secret;
+    private Long expiration = 1800000L;
+
+
+    private String secret = "SegredoSafadoSpringSecurity";
+
     public String generateToken(String email){
         return Jwts.builder()
                 .setSubject(email)
@@ -24,8 +24,8 @@ public class JWTUtil {
                 .compact();
     }
 
-    public boolean tokenValid(String key) {
-        Claims claims = getClaims(key);
+    public boolean tokenValid(String token) {
+        Claims claims = getClaims(token);
         if(claims != null){
             String username = claims.getSubject();
             Date expirationDate = claims.getExpiration();
@@ -37,16 +37,16 @@ public class JWTUtil {
         return false;
     }
 
-    private Claims getClaims(String key) {
+    private Claims getClaims(String token) {
         try{
-            return Jwts.parser().setSigningKey(key.getBytes()).parseClaimsJws(key).getBody();
+            return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
         }catch (Exception exception){
             return null;
         }
     }
 
-    public String getUsername(String key) {
-        Claims claims = getClaims(key);
+    public String getUsername(String token) {
+        Claims claims = getClaims(token);
         if(claims != null){
             return claims.getSubject();
         }

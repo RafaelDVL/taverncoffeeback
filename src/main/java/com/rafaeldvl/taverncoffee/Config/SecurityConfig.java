@@ -23,8 +23,6 @@ import java.util.Arrays;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
-
     @Autowired
     private Environment env;
     @Autowired
@@ -38,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         if(Arrays.asList(env.getActiveProfiles()).contains("test")){
             http.headers().frameOptions().disable();
         }
-
         http.cors().and().csrf().disable();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager() ,jwtUtil));
         http.addFilter(new JWTAuthorizationFilter(authenticationManager(),jwtUtil,userDetailsService));

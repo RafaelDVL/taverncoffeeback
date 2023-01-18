@@ -1,6 +1,5 @@
 package com.rafaeldvl.taverncoffee.Domain.Models;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Perfil;
 
@@ -107,7 +106,7 @@ public class Pessoa implements Serializable {
     }
 
     public Set<Perfil> getPerfil() {
-        return perfil.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+        return perfil.stream().map(Perfil::toEnum).collect(Collectors.toSet());
     }
 
     public void addPerfil(Perfil perfil) {

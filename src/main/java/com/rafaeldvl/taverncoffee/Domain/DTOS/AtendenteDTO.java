@@ -33,7 +33,7 @@ public class AtendenteDTO implements Serializable {
         private LocalDateTime datacriacao = LocalDateTime.now();
 
     public AtendenteDTO() {
-        addPerfil(Perfil.ATENDENTE);
+        addPerfil(Perfil.CLIENTE);
     }
 
     public AtendenteDTO(Atendente obj) {
@@ -47,7 +47,7 @@ public class AtendenteDTO implements Serializable {
         this.endereco = obj.getEndereco();
         this.perfil = obj.getPerfil().stream().map(o -> o.getCod()).collect(Collectors.toSet());
         this.datacriacao = obj.getDatacriacao();
-        this.addPerfil(Perfil.ATENDENTE);
+        this.addPerfil(Perfil.CLIENTE);
     }
 
     public Integer getId() {

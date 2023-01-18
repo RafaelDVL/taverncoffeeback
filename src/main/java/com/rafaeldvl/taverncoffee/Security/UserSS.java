@@ -10,18 +10,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserSS implements UserDetails {
-
     private static final long serialVersionUID = 1L;
     private Integer id;
     private String email;
     private String senha;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserSS(Integer id, String email, String senha, Set<Perfil> perfis) {
+    public UserSS(Integer id, String email, String senha, Set<Perfil> perfil) {
         this.id = id;
         this.email = email;
         this.senha = senha;
-        this.authorities = perfis.stream().map(o -> new SimpleGrantedAuthority(o.getDescricao())).collect(Collectors.toSet());
+        this.authorities = perfil.stream().map(o -> new SimpleGrantedAuthority(o.getDescricao())).collect(Collectors.toSet());
+    }
+    public Integer getId(){
+        return id;
     }
 
     @Override

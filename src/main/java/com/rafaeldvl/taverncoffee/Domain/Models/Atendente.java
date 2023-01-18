@@ -18,11 +18,12 @@ public class Atendente extends Pessoa {
     private List<OrdemPedido> listaOrdem = new ArrayList<>();
 
     public Atendente() {
-        addPerfil(Perfil.ATENDENTE);
+        super();
+        addPerfil(Perfil.CLIENTE);
     }
     public Atendente(Integer id, String nome, String cpf, String email, String senha, String telefone, String endereco) {
         super(id, nome, cpf, email, senha, telefone, endereco);
-        addPerfil(Perfil.ATENDENTE);
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Atendente(AtendenteDTO obj) {
@@ -38,12 +39,12 @@ public class Atendente extends Pessoa {
         this.setDatacriacao(obj.getDatacriacao());
     }
 
-
     public List<OrdemPedido> getListaOrdem() {
         return listaOrdem;
     }
 
-    public void addListaOrdem(List<OrdemPedido> ordemPedidos) {
+    public void setListaOrdem(List<OrdemPedido> ordemPedidos) {
+
         this.listaOrdem = ordemPedidos;
     }
 }
