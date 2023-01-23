@@ -1,7 +1,10 @@
 package com.rafaeldvl.taverncoffee.Controllers;
 
+import com.rafaeldvl.taverncoffee.Domain.DTOS.ItemBillDTO;
 import com.rafaeldvl.taverncoffee.Domain.DTOS.OrdemPedidoDTO;
+import com.rafaeldvl.taverncoffee.Domain.Models.ItemBill;
 import com.rafaeldvl.taverncoffee.Domain.Models.OrdemPedido;
+import com.rafaeldvl.taverncoffee.Repository.ItemBillRepository;
 import com.rafaeldvl.taverncoffee.Services.OrdemPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +15,15 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/ordempedido")
 public class OrdemPedidoController {
     @Autowired
     OrdemPedidoService service;
+
+    @Autowired
+    ItemBillRepository itemBillRepository;
 
     @GetMapping("/all")
     public ResponseEntity<List<OrdemPedidoDTO>> findAll(){
@@ -31,6 +38,13 @@ public class OrdemPedidoController {
         OrdemPedidoDTO objDTO = new OrdemPedidoDTO(obj);
         return ResponseEntity.ok().body(objDTO);
     }
+    @GetMapping("/itembill/{pedidoid}")
+    public ResponseEntity<List<ItemBillDTO>> findItemBillById(@PathVariable Integer pedidoid){
+        List<ItemBill> obj = itemBillRepository.findByOrderId(pedidoid);
+        List<ItemBillDTO> objDTO = obj.stream().map(ItemBillDTO::new).toList();
+        return ResponseEntity.ok().body(objDTO);
+    }
+
 
     @PostMapping("/create")
     public ResponseEntity<OrdemPedidoDTO> create(@Valid @RequestBody OrdemPedidoDTO ordemPedidoDTO){

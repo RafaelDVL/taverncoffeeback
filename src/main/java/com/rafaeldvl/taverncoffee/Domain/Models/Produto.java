@@ -5,7 +5,6 @@ import com.rafaeldvl.taverncoffee.Domain.DTOS.ProdutoDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,10 +19,10 @@ public class Produto implements Serializable {
     private String urlImage;
     private String observacoes;
 
-
     @JsonIgnore
-    @ManyToMany(mappedBy = "listaProduto")
-    private List<OrdemPedido> listaOrdem = new ArrayList<>();
+    @OneToMany(mappedBy = "produto")
+    private List<ItemBill> itemBillList;
+
 
     public Produto() {
     }
@@ -94,11 +93,11 @@ public class Produto implements Serializable {
         this.observacoes = observacoes;
     }
 
-    public List<OrdemPedido> getListaOrdem() {
-        return listaOrdem;
+    public List<ItemBill> getItemBillList() {
+        return itemBillList;
     }
 
-    public void addListaOrdem(OrdemPedido ordemPedido) {
-        this.listaOrdem.add(ordemPedido);
+    public void setItemBillList(List<ItemBill> itemBillList) {
+        this.itemBillList = itemBillList;
     }
 }

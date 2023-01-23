@@ -1,13 +1,8 @@
 package com.rafaeldvl.taverncoffee.Domain.DTOS;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rafaeldvl.taverncoffee.Domain.Enums.Prioridade;
-import com.rafaeldvl.taverncoffee.Domain.Enums.Status;
-import com.rafaeldvl.taverncoffee.Domain.Models.Atendente;
-import com.rafaeldvl.taverncoffee.Domain.Models.Cliente;
+import com.rafaeldvl.taverncoffee.Domain.Models.ItemBill;
 import com.rafaeldvl.taverncoffee.Domain.Models.OrdemPedido;
-import com.rafaeldvl.taverncoffee.Domain.Models.Produto;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -25,11 +20,12 @@ public class OrdemPedidoDTO implements Serializable {
     private String entrega;
     private Integer prioridade;
     private Integer status;
-    private List<Produto> listaProduto;
+    private List<ItemBill> itemBillList;
     private Integer cliente;
     private Integer atendente;
     private String nomeAtendente;
     private String nomeCliente;
+
 
     public OrdemPedidoDTO() {
         super();
@@ -42,7 +38,7 @@ public class OrdemPedidoDTO implements Serializable {
         this.entrega = obj.getEntrega();
         this.prioridade = obj.getPrioridade().getCod();
         this.status = obj.getStatus().getCod();
-        this.listaProduto = obj.getListaProduto();
+        this.itemBillList = obj.getItemBillList();
         this.cliente = obj.getCliente().getId();
         this.atendente = obj.getAtendente().getId();
         this.nomeAtendente = obj.getAtendente().getNome();
@@ -97,13 +93,14 @@ public class OrdemPedidoDTO implements Serializable {
         this.status = status;
     }
 
-    public List<Produto> getListaProduto() {
-        return listaProduto;
+    public List<ItemBill> getItemBillList() {
+        return itemBillList;
     }
 
-    public void setListaProduto(List<Produto> listaProduto) {
-        this.listaProduto = listaProduto;
+    public void setItemBillList(List<ItemBill> itemBillList) {
+        this.itemBillList = itemBillList;
     }
+
 
     public Integer getCliente() {
         return cliente;
@@ -136,4 +133,5 @@ public class OrdemPedidoDTO implements Serializable {
     public void setNomeCliente(String nomeCliente) {
         this.nomeCliente = nomeCliente;
     }
+
 }

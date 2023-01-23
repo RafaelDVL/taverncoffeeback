@@ -2,7 +2,6 @@ package com.rafaeldvl.taverncoffee.Domain.Models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rafaeldvl.taverncoffee.Domain.DTOS.OrdemPedidoDTO;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Prioridade;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Status;
 
@@ -11,9 +10,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
+@DiscriminatorValue(value = "O")
 public class OrdemPedido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -26,19 +25,16 @@ public class OrdemPedido implements Serializable {
     private String entrega;
     private Prioridade prioridade;
     private Status status;
-
-    @JsonIgnore
-    @ElementCollection
-    @JoinTable(name = "ordempedido_produtos", joinColumns = {@JoinColumn(name ="ordempedido_id")}, inverseJoinColumns = {@JoinColumn(name = "produto_id")})
-    private List<Produto> listaProduto = new ArrayList<>();
-
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-
     @ManyToOne
     @JoinColumn(name = "atendente_id")
     private Atendente atendente;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "ordemPedido", fetch = FetchType.EAGER)
+    private List<ItemBill> itemBillList = new ArrayList<>();
 
     public OrdemPedido() {
         setPrioridade(Prioridade.MEDIA);
@@ -86,20 +82,20 @@ public class OrdemPedido implements Serializable {
         this.entrega = entrega;
     }
 
+    public Prioridade getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(Prioridade prioridade) {
+        this.prioridade = prioridade;
+    }
+
     public Status getStatus() {
         return status;
     }
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public List<Produto> getListaProduto() {
-        return listaProduto;
-    }
-
-    public void addListaProduto(Produto Produto) {
-        this.listaProduto.add(Produto);
     }
 
     public Cliente getCliente() {
@@ -118,23 +114,27 @@ public class OrdemPedido implements Serializable {
         this.atendente = atendente;
     }
 
-    public Prioridade getPrioridade() {
-        return prioridade;
+    public List<ItemBill> getItemBillList() {
+        return itemBillList;
     }
 
-    public void setPrioridade(Prioridade prioridade) {
-        this.prioridade = prioridade;
+    public void addItemBillList(ItemBill itemNovo) {
+        for(ItemBill item: itemBillList){
+            if(item.getProduto().equals(itemNovo.getProduto())) {
+                item.aumentarQuantidade(itemNovo.getQuantidade());
+            }
+        }
+        this.itemBillList.add(itemNovo);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrdemPedido that = (OrdemPedido) o;
-        return Objects.equals(id, that.id) && Objects.equals(dataAbertura, that.dataAbertura) && Objects.equals(dataFechamento, that.dataFechamento) && Objects.equals(entrega, that.entrega) && prioridade == that.prioridade && status == that.status && Objects.equals(listaProduto, that.listaProduto) && Objects.equals(cliente, that.cliente) && Objects.equals(atendente, that.atendente);
+    public void removeItemBillList(ItemBill itemNovo){
+        for(ItemBill item: itemBillList){
+            if(item.getProduto().equals(itemNovo.getProduto())) {
+                this.itemBillList.remove(item);
+            }
+        }
     }
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, dataAbertura, dataFechamento, entrega, prioridade, status, listaProduto, cliente, atendente);
+    public void setItemBillList(List<ItemBill> itemBillList) {
+        this.itemBillList = itemBillList;
     }
 }

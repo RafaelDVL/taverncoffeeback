@@ -29,7 +29,6 @@ public class ProdutoDTO implements Serializable {
         this.nome = obj.getNome();
         this.urlImage = obj.getUrlImage();
         this.observacoes = obj.getObservacoes();
-        this.listaOrdem= obj.getListaOrdem();
     }
 
     public Integer getId() {
@@ -80,11 +79,4 @@ public class ProdutoDTO implements Serializable {
         this.observacoes = observacoes;
     }
 
-    public List<OrdemPedido> getListaOrdem() {
-        return listaOrdem;
-    }
-
-    public void setListaOrdem(List<OrdemPedido> listaOrdem) {
-        this.listaOrdem = listaOrdem;
-    }
 }

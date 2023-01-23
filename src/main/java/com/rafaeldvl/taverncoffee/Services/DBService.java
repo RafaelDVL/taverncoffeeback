@@ -3,10 +3,7 @@ package com.rafaeldvl.taverncoffee.Services;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Perfil;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Prioridade;
 import com.rafaeldvl.taverncoffee.Domain.Enums.Status;
-import com.rafaeldvl.taverncoffee.Domain.Models.Atendente;
-import com.rafaeldvl.taverncoffee.Domain.Models.Cliente;
-import com.rafaeldvl.taverncoffee.Domain.Models.OrdemPedido;
-import com.rafaeldvl.taverncoffee.Domain.Models.Produto;
+import com.rafaeldvl.taverncoffee.Domain.Models.*;
 import com.rafaeldvl.taverncoffee.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,6 +26,9 @@ public class DBService {
     private BCryptPasswordEncoder encoder;
     @Autowired
     private PessoaRepository pessoaRepository;
+
+    @Autowired
+    private ItemBillRepository itemBillRepository;
 
     public void instanciaDB(){
         Atendente at1 = new Atendente(null, "Rafael Dias Rodrigues",
@@ -59,14 +59,27 @@ public class DBService {
         Cliente cli5 = new Cliente(null, "Max Planck", "081.399.300-83", "planck@mail.com", encoder.encode("123"),"159999978978","Avenida Champs, 260");
 
         Produto p1 = new Produto(null,10,20.00,"Pizza","http://conteudo.imguol.com.br/c/entretenimento/54/2021/05/07/pizza-de-batata---instachef-1620392226580_v2_1598x1920.jpg","Sem tomate");
-
+        Produto p2 = new Produto(null,5,10.00,"Pão de Queijo","https://www.donaformosa.com.br/wp-content/uploads/2022/05/pao_de_queijo.jpeg","Com requeijão");
         OrdemPedido o1 = new OrdemPedido(null,"Retirar", Status.ABERTO, c1, at2, Prioridade.MEDIA);
+        OrdemPedido o2 = new OrdemPedido(null,"Entrega", Status.ANDAMENTO, cli3, tec4, Prioridade.MEDIA);
+        ItemBill it1 = new ItemBill(null,o1,p1,4);
+        ItemBill it2 = new ItemBill(null,o1,p2,7);
+        ItemBill it3 = new ItemBill(null,o2,p2,12);
+
 
         pessoaRepository.saveAll(Arrays.asList(tec2,tec3,tec4,tec5,cli1,cli2,cli3,cli4,cli5));
         produtoRepository.save(p1);
+        produtoRepository.save(p2);
         clienteRepository.save(c1);
         atendenteRepository.save(at1);
         atendenteRepository.save(at2);
         ordemPedidoRepository.save(o1);
+        ordemPedidoRepository.save(o2);
+        itemBillRepository.save(it1);
+        itemBillRepository.save(it2);
+        itemBillRepository.save(it3);
+
+
+
     }
 }
